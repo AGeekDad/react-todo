@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "react-todo",
   "version": "1.0.0",
-  "description": "Simple react app",
+  "description": "react todo app",
   "main": "index.js",
   "scripts": {
     "test": "karma start",
