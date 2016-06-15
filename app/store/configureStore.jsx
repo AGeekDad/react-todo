@@ -1,7 +1,7 @@
 var redux = require('redux');
 var thunk = require('redux-thunk').default;
 
-var { searchTextReducer, showCompletedReducer, todosReducer } = require('../reducers/index.jsx');
+var { searchTextReducer, showCompletedReducer, todosReducer } = require('reducers');
 
 export var configure = () => {
 

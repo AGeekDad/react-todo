@@ -1,7 +1,22 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var { Provider } = require('react-redux');
 var {Route, Router, IndexRoute, hashHistory} = require('react-router');
+
 var ToDoApp = require('ToDoApp');
+
+var actions = require('actions');
+var store = require('configureStore').configure();
+
+var unsubscribe = store.subscribe(() => {
+  var state = store.getState();
+
+  console.log('Search: ', state.searchText, state.showCompleted);
+  console.log('ToDos: ', state.todos.length);
+  if(state.todos.length > 0){
+    console.log(state.todos[0]);
+  }
+});
 
 // Load foundation
 $(document).foundation();
@@ -10,9 +25,8 @@ $(document).foundation();
 require('style!css!sass!applicationStyles')
 
 ReactDOM.render(
-  <Router history={hashHistory}>
-    <Route path="/" component={ToDoApp}>
-    </Route>
-  </Router>,
+  <Provider store={store}>
+    <ToDoApp />
+  </Provider>,
   document.getElementById('app')
 );
