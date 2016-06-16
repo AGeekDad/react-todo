@@ -7,6 +7,7 @@ var ToDoApp = require('ToDoApp');
 
 var actions = require('actions');
 var store = require('configureStore').configure();
+var TodoAPI = require('TodoAPI');
 
 var unsubscribe = store.subscribe(() => {
   var state = store.getState();
@@ -16,7 +17,13 @@ var unsubscribe = store.subscribe(() => {
   if(state.todos.length > 0){
     console.log(state.todos[0]);
   }
+
+  TodoAPI.setTodos(state.todos);
 });
+
+var initialTodos = TodoAPI.getTodos();
+
+store.dispatch(actions.addTodos(initialTodos));
 
 // Load foundation
 $(document).foundation();
