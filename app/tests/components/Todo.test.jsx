@@ -4,7 +4,7 @@ var expect = require('expect');
 var $ = require('jQuery');
 var TestUtils = require('react-addons-test-utils');
 
-var { Todo } = require('Todo');
+var {Todo} = require('Todo');
 
 describe('Todo', () => {
   it('should exist', () => {
@@ -21,8 +21,8 @@ describe('Todo', () => {
     TestUtils.Simulate.click($el[0]);
 
     expect(spy).toHaveBeenCalledWith({
-      id: todoData.id,
-      type: 'TOGGLE_TODO'
+      type: 'TOGGLE_TODO',
+      id: todoData.id
     });
 
   });
