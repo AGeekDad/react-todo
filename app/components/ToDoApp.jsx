@@ -1,4 +1,4 @@
-var React = require('react');
+import React from 'react';
 import * as Redux from 'react-redux';
 
 import AddTodo from 'AddTodo';
@@ -6,7 +6,7 @@ import TodoList  from 'TodoList';
 import TodoSearch from 'TodoSearch';
 import * as actions from 'actions';
 
-export var ToDoApp = React.createClass({
+export var TodoApp = React.createClass({
   onLogout(e) {
     var {dispatch} = this.props;
     e.preventDefault();
@@ -35,4 +35,4 @@ export var ToDoApp = React.createClass({
   }
 });
 
-export default Redux.connect()(ToDoApp);
+export default Redux.connect()(TodoApp);
