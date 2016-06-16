@@ -26,7 +26,7 @@ describe('TodoSearch', () => {
     });
   });
 
-  it('Search text blank, do not show completed', () => {
+  it('dispatch show completed action', () => {
     var spy = expect.createSpy();
     var todoSearch = TestUtils.renderIntoDocument(<TodoSearch dispatch={spy}/>);
 
