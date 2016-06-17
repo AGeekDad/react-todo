@@ -119,6 +119,7 @@ export var startLogin = () => {
 };
 
 export var logout = () => {
+  unMonitorChanges();
   return {
     type: 'LOGOUT'
   };
@@ -131,3 +132,47 @@ export var startLogout = () => {
     });
   };
 };
+
+var changeMonitors;
+export var monitorChanges = () => {
+  return (dispatch, getState) => {
+    console.log('Monitoring Firebase updates');
+    debugger;
+
+    var uid = getState().auth.uid;
+    var todosRef = firebaseRef.child(`users/${uid}/todos`);
+
+    var unsubscribeChildAdded = todosRef.on('child_added', (snapshot) => {
+      console.log('child_added', snapshot.key, snapshot.val());
+      dispatch(startAddTodos());
+    });
+
+    var unsubscribeChildChanged = todosRef.on('child_changed', (snapshot) => {
+      console.log('child_changed', snapshot.key, snapshot.val());
+      dispatch(startAddTodos());
+    });
+
+    var unsubscribeChildRemoved = todosRef.on('child_removed', (snapshot) => {
+      console.log('child_removed', snapshot.key, snapshot.val());
+      dispatch(startAddTodos());
+    });
+
+    changeMonitors = {
+      unsubscribeChildAdded,
+      unsubscribeChildChanged,
+      unsubscribeChildRemoved
+    };
+
+    return changeMonitors;
+  }
+}
+
+var unMonitorChanges = () => {
+  console.log('Stop monitoring Firebase updates');
+  debugger;
+  if(changeMonitors) {
+    Object.keys(changeMonitors).forEach((unsubscriber) => {
+      changeMonitors[unsubscriber]();
+    });
+  }
+}

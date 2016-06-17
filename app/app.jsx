@@ -7,28 +7,13 @@ var actions = require('actions');
 var store = require('configureStore').configure();
 import firebase, {firebaseRef} from 'app/firebase/'
 import router from 'app/router/';
-
-// var todosRef = firebaseRef.child('todos');
-//
-// todosRef.on('child_added', (snapshot) => {
-//   console.log('child_added', snapshot.key, snapshot.val());
-//   store.dispatch(actions.startAddTodos());
-// });
-//
-// todosRef.on('child_changed', (snapshot) => {
-//   console.log('child_changed', snapshot.key, snapshot.val());
-//   store.dispatch(actions.startAddTodos());
-// });
-//
-// todosRef.on('child_removed', (snapshot) => {
-//   console.log('child_removed', snapshot.key, snapshot.val());
-//   store.dispatch(actions.startAddTodos());
-// });
+import { monitorChanges, unMonitorChanges } from 'app/firebase/monitorChanges'
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     store.dispatch(actions.login(user.uid));
     store.dispatch(actions.startAddTodos());
+    store.dispatch(actions.monitorChanges());
     hashHistory.push('/todos');
   } else {
     store.dispatch(actions.logout());
