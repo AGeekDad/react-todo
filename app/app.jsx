@@ -7,7 +7,6 @@ var actions = require('actions');
 var store = require('configureStore').configure();
 import firebase, {firebaseRef} from 'app/firebase/'
 import router from 'app/router/';
-import { monitorChanges, unMonitorChanges } from 'app/firebase/monitorChanges'
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
