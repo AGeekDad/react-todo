@@ -137,7 +137,6 @@ var changeMonitors;
 export var monitorChanges = () => {
   return (dispatch, getState) => {
     console.log('Monitoring Firebase updates');
-    debugger;
 
     var uid = getState().auth.uid;
     var todosRef = firebaseRef.child(`users/${uid}/todos`);
@@ -169,7 +168,6 @@ export var monitorChanges = () => {
 
 var unMonitorChanges = () => {
   console.log('Stop monitoring Firebase updates');
-  debugger;
   if(changeMonitors) {
     Object.keys(changeMonitors).forEach((unsubscriber) => {
       changeMonitors[unsubscriber]();
