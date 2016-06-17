@@ -38,10 +38,6 @@ export var TodoList = React.createClass({
 
 export default connect(
   (state) => {
-    return {
-      todos: state.todos,
-      showCompleted: state.showCompleted,
-      searchText: state.searchText
-    };
+    return state;
   }
 )(TodoList);

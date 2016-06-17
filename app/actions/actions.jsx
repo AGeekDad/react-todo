@@ -1,4 +1,4 @@
-var moment = require('moment');
+import moment from 'moment';
 
 import firebase, {firebaseRef, githubProvider} from 'app/firebase/';
 
@@ -25,7 +25,7 @@ export var addTodo = (todo) => {
 export var startAddTodo = (text) => {
   return (dispatch, getState) => {
     var todo = {
-      text: text,
+      text,
       completed: false,
       createdAt: moment().unix(),
       completedAt: null
@@ -40,8 +40,8 @@ export var startAddTodo = (text) => {
         id: todoRef.key
       }));
     });
-  }
-}
+  };
+};
 
 export var addTodos = (todos) => {
   return {
@@ -92,13 +92,6 @@ export var startToggleTodo = (id, completed) => {
       dispatch(updateTodo(id, updates));
     });
   };
-};
-
-export var addTodos = (todos) => {
-  return {
-    type: 'ADD_TODOS',
-    todos
-  }
 };
 
 export var login = (uid) => {

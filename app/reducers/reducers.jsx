@@ -6,7 +6,7 @@ export var searchTextReducer = (state = '', action) => {
       return action.searchText;
     default:
       return state;
-  }
+  };
 };
 
 export var showCompletedReducer = (state = false, action) => {
@@ -37,6 +37,7 @@ export var todosReducer = (state = [], action) => {
        });
     case 'ADD_TODOS':
       return [
+          ...state,
           ...action.todos
         ];
     case 'LOGOUT':
@@ -44,7 +45,7 @@ export var todosReducer = (state = [], action) => {
      default:
        return state;
   }
-}
+};
 
 export var authReducer = (state = {}, action) => {
   switch (action.type) {
