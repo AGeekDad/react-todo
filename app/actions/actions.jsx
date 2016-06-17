@@ -133,7 +133,6 @@ export var startLogout = () => {
   };
 };
 
-var changeMonitors;
 export var monitorChanges = () => {
   return (dispatch, getState) => {
     console.log('Monitoring Firebase updates');
@@ -141,36 +140,27 @@ export var monitorChanges = () => {
     var uid = getState().auth.uid;
     var todosRef = firebaseRef.child(`users/${uid}/todos`);
 
-    var unsubscribeChildAdded = todosRef.on('child_added', (snapshot) => {
+    var unsubscribeChildAdded = (snapshot) => {
       console.log('child_added', snapshot.key, snapshot.val());
       dispatch(startAddTodos());
-    });
+    };
+    todosRef.on('child_added', unsubscribeChildAdded);
 
-    var unsubscribeChildChanged = todosRef.on('child_changed', (snapshot) => {
+    var unsubscribeChildChanged = (snapshot) => {
       console.log('child_changed', snapshot.key, snapshot.val());
       dispatch(startAddTodos());
-    });
+    };
+    todosRef.on('child_changed', unsubscribeChildChanged);
 
-    var unsubscribeChildRemoved = todosRef.on('child_removed', (snapshot) => {
+    var unsubscribeChildRemoved = (snapshot) => {
       console.log('child_removed', snapshot.key, snapshot.val());
       dispatch(startAddTodos());
-    });
-
-    changeMonitors = {
-      unsubscribeChildAdded,
-      unsubscribeChildChanged,
-      unsubscribeChildRemoved
     };
-
-    return changeMonitors;
+    todosRef.on('child_removed', unsubscribeChildRemoved);
   }
 }
 
 var unMonitorChanges = () => {
   console.log('Stop monitoring Firebase updates');
-  if(changeMonitors) {
-    Object.keys(changeMonitors).forEach((unsubscriber) => {
-      changeMonitors[unsubscriber]();
-    });
-  }
+  firebaseRef.off();
 }
